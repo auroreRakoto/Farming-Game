@@ -3,6 +3,15 @@ using UnityEngine.Tilemaps;
 
 public class PondGenerator : MonoBehaviour
 {
+    public enum PondShape
+    {
+        Square,
+        Circle,
+        Random
+    }
+
+    public PondShape pondShape = PondShape.Circle;
+
     public Tilemap tilemap;
 
     public TileBase tileCenter;
@@ -25,7 +34,7 @@ public class PondGenerator : MonoBehaviour
 
     public void GeneratePond(int pondWidth, int pondHeight, int xOffset, int yOffset)
     {
-        Debug.Log("Generating Pond...");
+        Debug.Log($"Generating Pond ({pondShape})...");
 
         if (tilemap == null)
         {
@@ -33,6 +42,19 @@ public class PondGenerator : MonoBehaviour
             return;
         }
 
+        if (pondShape == PondShape.Square)
+        {
+            GenerateSquarePond(pondWidth, pondHeight, xOffset, yOffset);
+        }
+        else if (pondShape == PondShape.Circle)
+        {
+            GenerateCirclePond(pondWidth, pondHeight, xOffset, yOffset);
+        }
+    }
+
+
+    public void GenerateSquarePond(int pondWidth, int pondHeight, int xOffset, int yOffset)
+    {
         for (int x = 0; x < pondWidth; x++)
         {
             for (int y = 0; y < pondHeight; y++)
@@ -64,4 +86,54 @@ public class PondGenerator : MonoBehaviour
             }
         }
     }
+
+    private void GenerateCirclePond(int pondWidth, int pondHeight, int xOffset, int yOffset)
+    {
+        float cx = pondWidth / 2f;
+        float cy = pondHeight / 2f;
+        float radius = Mathf.Min(pondWidth, pondHeight) / 2f;
+
+        float borderThickness = 1f;
+
+        for (int x = 0; x < pondWidth; x++)
+        {
+            for (int y = 0; y < pondHeight; y++)
+            {
+                float dx = x - cx + 0.5f;
+                float dy = y - cy + 0.5f;
+                float dist = Mathf.Sqrt(dx * dx + dy * dy);
+
+                if (dist <= radius)
+                {
+                    float distanceToEdge = radius - dist;
+
+                    TileBase tileToPlace = tileCenter;
+
+                    if (distanceToEdge <= borderThickness)
+                    {
+                        // On est sur le "bord" du cercle
+                        // On regarde l'angle pour savoir quel type de bord
+
+                        float angle = Mathf.Atan2(dy, dx) * Mathf.Rad2Deg;
+
+                        // On peut décider : "plage d'angle" → quelle tile
+
+                        if (angle >= -45f && angle < 45f)
+                            tileToPlace = tileRight; // droite
+                        else if (angle >= 45f && angle < 135f)
+                            tileToPlace = tileTop; // haut
+                        else if (angle >= -135f && angle < -45f)
+                            tileToPlace = tileBottom; // bas
+                        else
+                            tileToPlace = tileLeft; // gauche
+                    }
+
+                    // Sinon (on est "loin du bord") → tileCenter
+
+                    tilemap.SetTile(new Vector3Int(x + xOffset, y + yOffset, 0), tileToPlace);
+                }
+            }
+        }
+    }
+
 }
