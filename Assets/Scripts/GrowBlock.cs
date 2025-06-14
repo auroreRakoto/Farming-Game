@@ -5,36 +5,61 @@ using UnityEngine.InputSystem;
 
 public class GrowBlock : MonoBehaviour
 {
-    public enum GrowthStage
-    {
-        barren,
-        ploughed,
-        planted,
-        growing1,
-        growing2,
-        ripe
-    }
+	public enum GrowthStage
+	{
+		barren,
+		ploughed,
+		planted,
+		growing1,
+		growing2,
+		ripe
+	}
 
-    public GrowthStage currentStage;
+	public GrowthStage currentStage;
+	public SpriteRenderer theSP;
+	public Sprite soilTilled;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+	// Start is called once before the first execution of Update after the MonoBehaviour is created
+	void Start()
+	{
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (Keyboard.current.eKey.wasPressedThisFrame)
-        {
-            AdvanceStage();
-        }
-    }
+	}
 
-    public void AdvanceStage()
-    {
-        currentStage = (GrowthStage)(((int)currentStage + 1) % Enum.GetValues(typeof(GrowthStage)).Length);
+	// Update is called once per frame
+	void Update()
+	{
+		/*if (Keyboard.current.eKey.wasPressedThisFrame)
+		{
+			AdvanceStage();
 
-    }
+			SetSoilSprite();
+		}*/
+	}
+
+	public void AdvanceStage()
+	{
+		currentStage = (GrowthStage)(((int)currentStage + 1) % Enum.GetValues(typeof(GrowthStage)).Length);
+	}
+
+	public void SetSoilSprite()
+	{
+		if (currentStage == GrowthStage.barren)
+		{
+			theSP.sprite = null;
+		}
+		else
+		{
+			theSP.sprite = soilTilled;
+		}
+	}
+
+	public void PloughSoil()
+	{
+		if (currentStage == GrowthStage.barren)
+		{
+			AdvanceStage();
+
+			SetSoilSprite();
+		}
+	}
 }

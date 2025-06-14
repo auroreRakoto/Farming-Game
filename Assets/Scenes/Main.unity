@@ -1150,7 +1150,7 @@ GameObject:
   - component: {fileID: 698400447}
   - component: {fileID: 698400448}
   m_Layer: 0
-  m_Name: Grid_Indicator
+  m_Name: Block Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1215,7 +1215,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 6563066755110389082, guid: 290be3330cf84bc4d93460bae4e8d47f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 4e9794053f8b48b4588b32c604a7e197, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -1255,7 +1255,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b9f8aeb217366d468ee02fb5eba78be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentStage: 1
+  currentStage: 0
+  theSP: {fileID: 698400448}
+  soilTilled: {fileID: 6563066755110389082, guid: 290be3330cf84bc4d93460bae4e8d47f, type: 3}
 --- !u!4 &769487185
 Transform:
   m_ObjectHideFlags: 0
@@ -1475,6 +1477,7 @@ MonoBehaviour:
   theRB: {fileID: 919735853}
   moveSpeed: 10
   moveInput: {fileID: -1680190386980627800, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
+  actionInput: {fileID: 1120369429361536294, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   anim: {fileID: 106076262}
 --- !u!70 &919735855
 CapsuleCollider2D:
