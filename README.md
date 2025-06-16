@@ -1,7 +1,7 @@
 # 🌾 Solo Farming Game (Unity 2D Project)
 
 A 2D farming game project made with Unity.  
-Originally based on a **Udemy course** — extended with custom tools (Editor scripts), better architecture and my own ideas.
+Originally based on a **Udemy course** — extended with custom tools, better architecture and my own ideas.
 
 This project serves as a learning playground and portfolio project.
 
@@ -13,8 +13,19 @@ This project serves as a learning playground and portfolio project.
 ✅ Smooth **player movement** with animations  
 ✅ Dynamic **camera follow** with clamping to map boundaries  
 ✅ Collision system to prevent player leaving the map  
-✅ **Pond Generator** Editor tool (automatically create ponds in tilemap)  
-✅ Modular project setup
+✅ Modular project setup    
+✅ Player farming actions: till soil based on input    
+✅ Tile evolution system using enums and sprite switching    
+✅ Tool switching with keyboard input (Tab and number keys)    
+✅ Tool selection UI with canvas, icons, and active tool indicator    
+
+## 🌟 Personal Feature
+🛠️ Advanced Pond Generator (Custom Editor Tool)    
+→ Designed and implemented entirely outside the course    
+→ Integrated into the Unity Editor as a custom EditorWindow    
+→ Supports automatic generation of both square and circular ponds    
+→ Smart placement of custom tiles (center, edges, corners)    
+→ Greatly speeds up level design and iteration with the Tilemap system    
 
 ---
 
@@ -34,13 +45,21 @@ This project serves as a learning playground and portfolio project.
     → Uses custom tiles (center / sides / corners)  
     → Integrated with Tilemap system
 
-### Next Steps
+### Player Interaction & Farming
+- [x] Implement tile states (barren, ploughed) via enums
+- [x] Visual feedback on soil tiles via sprite change
+- [x] Player input system to plough soil on action
+- [x] Good practice: actions are performed by the relevant objects themselves
 
+### 🔜 Next Steps
+
+- [ ] Add support for planting and crop growth over time
 - [ ] Add interactable objects (trees, crops, rocks)
 - [ ] Implement basic inventory system
 - [ ] Add UI for player stats
 - [ ] Expand Pond Generator to support **non-rectangular shapes** (Perlin noise)
 - [ ] Polish player controls (diagonal movement smoothing, fine-tune animations)
+
 
 ---
 
@@ -53,8 +72,11 @@ Assets/
 │   ├── PlayerController.cs         --> Player movement + animation
 │   ├── CameraFollow.cs             --> Camera follow + clamping
 │   ├── PondGenerator.cs            --> MonoBehaviour for pond generation
+│   ├── GrowBlock.cs                --> Soil tile logic and sprite evolution
+│   └── ToolManager.cs              --> Tool enum and usage logic
 ├── Tilemaps/                       --> Tilemap layers and palettes
 ├── Prefabs/                        --> Reusable game objects
+├── UI/                             --> Toolbar and icons
 └── Scenes/                         --> Main scene
 ```
 
@@ -66,7 +88,9 @@ Assets/
 - Practice **Tilemap-based level design**
 - Master 2D player control and animation blending
 - Build reusable tools for game production
+- Explore Unity's UI system and input handling
 - Prepare a polished project for portfolio
+
 
 ---
 
