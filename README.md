@@ -96,6 +96,7 @@ Assets/
 
 ## 📚 References
 
+- https://www.udemy.com/share/10cavl3@o5QYPtFAiATe8AxnYibETH5ecG4agFHeknewVbGhZDDphwTmkmGqeBNHeCDlk_Colg==/
 - [Udemy Course - Solo Farm Game](https://www.notion.so/Solo-Farm-Game-Udemy-20e97e9c743680c0946ddc897a997de1?pvs=21)
 - Personal extensions & experiments
 
