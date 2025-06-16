@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -9,6 +10,16 @@ public class PlayerController : MonoBehaviour
 	public InputActionReference moveInput;
 	public InputActionReference actionInput;
 	public Animator anim;
+
+	public enum ToolType
+	{
+		plough,
+		wateringCan,
+		seeds,
+		basket
+	}
+
+	public ToolType currentTool;
 
 	// Start is called once before the first execution of Update after the MonoBehaviour is created
 	void Start()
@@ -26,6 +37,32 @@ public class PlayerController : MonoBehaviour
 		else if (theRB.linearVelocity.x > 0f)
 			transform.localScale = new Vector3(1f, 1f, 1f);
 
+		if (Keyboard.current.tabKey.wasPressedThisFrame)
+		{
+			currentTool++;
+			if ((int)currentTool >= Enum.GetValues(typeof(ToolType)).Length)
+			{
+				currentTool = ToolType.plough;
+			}
+		}
+
+		if (Keyboard.current.digit1Key.wasPressedThisFrame)
+		{
+			currentTool = ToolType.plough;
+		}
+		if (Keyboard.current.digit2Key.wasPressedThisFrame)
+		{
+			currentTool = ToolType.wateringCan;
+		}
+		if (Keyboard.current.digit3Key.wasPressedThisFrame)
+		{
+			currentTool = ToolType.seeds;
+		}
+		if (Keyboard.current.digit4Key.wasPressedThisFrame)
+		{
+			currentTool = ToolType.basket;
+		}
+
 		if (actionInput.action.WasPressedThisFrame())
 		{
 			UseTool();
@@ -40,6 +77,25 @@ public class PlayerController : MonoBehaviour
 		GrowBlock block = null;
 		block = FindFirstObjectByType<GrowBlock>();
 
-		block.PloughSoil();
+		//block.PloughSoil();
+
+		if (block != null)
+		{
+			switch (currentTool)
+			{
+				case ToolType.plough:
+					block.PloughSoil();
+					break;
+				case ToolType.wateringCan:
+					// code
+					break;
+				case ToolType.seeds:
+					// code
+					break;
+				case ToolType.basket:
+					// code
+					break;
+			}
+		}
 	}
 }
