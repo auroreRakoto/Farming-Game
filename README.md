@@ -53,13 +53,20 @@ This project serves as a learning playground and portfolio project.
 
 ### 🔜 Next Steps
 
-- [ ] Add support for planting and crop growth over time
-- [ ] Add interactable objects (trees, crops, rocks)
-- [ ] Implement basic inventory system
-- [ ] Add UI for player stats
 - [ ] Expand Pond Generator to support **non-rectangular shapes** (Perlin noise)
-- [ ] Polish player controls (diagonal movement smoothing, fine-tune animations)
+- [ ] Add automatic UI Layout
 
+- [ ] Add interactable objects: trees, rocks, and crops
+- [ ] Implement seed buying/selling system
+- [ ] Add planting and crop growth mechanics
+- [ ] Introduce a day and time progression system
+- [ ] Build a basic inventory system
+- [ ] Track money and update based on sales and purchases
+- [ ] Polish tool switching system and expand tool functionality
+- [ ] Create UI for stats, inventory, and in-game shop
+- [ ] Add main menu and audio system
+- [ ] Implement tile targeting system for planting/harvesting
+- [ ] Playtest and refine full game loop
 
 ---
 
