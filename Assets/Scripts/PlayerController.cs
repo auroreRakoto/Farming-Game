@@ -21,15 +21,18 @@ public class PlayerController : MonoBehaviour
 
 	public ToolType currentTool;
 
+	bool itemSwitched;
+
 	// Start is called once before the first execution of Update after the MonoBehaviour is created
 	void Start()
 	{
-
+		UIController.instance.SwitchItem((int)currentTool);
 	}
 
 	// Update is called once per frame
 	void Update()
 	{
+		itemSwitched = false;
 		theRB.linearVelocity = moveInput.action.ReadValue<Vector2>().normalized * moveSpeed;
 
 		if (theRB.linearVelocity.x < 0f)
@@ -44,23 +47,33 @@ public class PlayerController : MonoBehaviour
 			{
 				currentTool = ToolType.plough;
 			}
+			itemSwitched = true;
 		}
 
 		if (Keyboard.current.digit1Key.wasPressedThisFrame)
 		{
 			currentTool = ToolType.plough;
+			itemSwitched = true;
 		}
 		if (Keyboard.current.digit2Key.wasPressedThisFrame)
 		{
 			currentTool = ToolType.wateringCan;
+			itemSwitched = true;
 		}
 		if (Keyboard.current.digit3Key.wasPressedThisFrame)
 		{
 			currentTool = ToolType.seeds;
+			itemSwitched = true;
 		}
 		if (Keyboard.current.digit4Key.wasPressedThisFrame)
 		{
 			currentTool = ToolType.basket;
+			itemSwitched = true;
+		}
+
+		if (itemSwitched == true)
+		{
+			UIController.instance.SwitchItem((int)currentTool);
 		}
 
 		if (actionInput.action.WasPressedThisFrame())
