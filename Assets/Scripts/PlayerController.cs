@@ -21,6 +21,9 @@ public class PlayerController : MonoBehaviour
 
 	public ToolType currentTool;
 
+	public float toolWaitTime = .5f;
+	public float toolWaitCounter;
+
 	bool itemSwitched;
 
 	// Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -81,7 +84,15 @@ public class PlayerController : MonoBehaviour
 			UseTool();
 		}
 
-		anim.SetFloat("speed", theRB.linearVelocity.magnitude);
+		if (toolWaitCounter > 0)
+		{
+			theRB.linearVelocity = Vector2.zero;
+			toolWaitCounter -= Time.deltaTime;
+		}
+		else
+		{
+			anim.SetFloat("speed", theRB.linearVelocity.magnitude);
+		}
 	}
 
 	void UseTool()
@@ -90,23 +101,25 @@ public class PlayerController : MonoBehaviour
 		GrowBlock block = null;
 		block = FindFirstObjectByType<GrowBlock>();
 
-		//block.PloughSoil();
+		toolWaitCounter = toolWaitTime;
 
 		if (block != null)
 		{
 			switch (currentTool)
 			{
 				case ToolType.plough:
+					anim.SetTrigger("plough");
 					block.PloughSoil();
 					break;
 				case ToolType.wateringCan:
-					// code
+					anim.SetTrigger("water");
+					block.WaterSoil();
 					break;
 				case ToolType.seeds:
-					// code
+					block.PlantCrop();
 					break;
 				case ToolType.basket:
-					// code
+					block.HarvestCrop();
 					break;
 			}
 		}
