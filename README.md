@@ -20,13 +20,18 @@ This project serves as a learning playground and portfolio project.
 ✅ Tool selection UI with canvas, icons, and active tool indicator    
 
 ## 🌟 Personal Feature
-🛠️ Advanced Pond Generator (Custom Editor Tool)    
+🛠️ Advanced Pond Generator (Custom Editor Tool)
+🛠️ Advanced Water Generator (Procedural System)  
 → Designed and implemented entirely outside the course    
 → Integrated into the Unity Editor as a custom EditorWindow    
 → Supports automatic generation of both square and circular ponds    
 → Smart placement of custom tiles (center, edges, corners)    
 → Greatly speeds up level design and iteration with the Tilemap system    
-
+→ Originally started with a square/circular **Pond Generator** (Editor tool)    
+→ Now diverging fully from the course into procedural terrain logic 
+→ Procedurally generates water zones using Perlin noise    
+→ Upcoming: autotiling with custom **bitmask-based tile selector** (pure code, no RuleTile)
+→ Lays the groundwork for future biome transitions and world generation systems
 ---
 
 ## 🎮 Current Progress
@@ -53,7 +58,9 @@ This project serves as a learning playground and portfolio project.
 
 ### 🔜 Next Steps
 
-- [ ] Expand Pond Generator to support **non-rectangular shapes** (Perlin noise)
+- [ ] Replace Pond Generator with full procedural **Perlin-based water generation**
+- [ ] Implement **bitmask autotiling** for water zones (no visual RuleTile setup)
+- [ ] Add transitions between biomes (e.g. water → grass → sand) via code
 - [ ] Add automatic UI Layout
 
 - [ ] Add interactable objects: trees, rocks, and crops
