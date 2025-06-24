@@ -10,7 +10,7 @@ public class PondGenerator : MonoBehaviour
 		Random
 	}
 
-	public PondShape pondShape = PondShape.Circle;
+	public PondShape pondShape = PondShape.Square;
 
 	public Tilemap tilemap;
 

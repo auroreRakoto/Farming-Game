@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f31852d4ff8fc046a34a05dc5651fd0, type: 3}
+  m_Name: Tiles1
+  m_EditorClassIdentifier: 
+  waterCenter: {fileID: 11400000, guid: a4db1a67e3f6e07428a8703ef0c28732, type: 2}
+  waterTop: {fileID: 11400000, guid: 61a4e1a6079761240950bc0a407e5c3d, type: 2}
+  waterTopText: nenuphar
+  waterBottom: {fileID: 11400000, guid: 7626808b3ee6124418a5c6f387ca253f, type: 2}
+  waterBottomText: terre
+  waterLeft: {fileID: 11400000, guid: 89d0fd8d5d527054dad38c55814e022e, type: 2}
+  waterLeftText: caillou
+  waterRight: {fileID: 11400000, guid: 86bbb8067f2bf3e42a7b8d7e04347e5b, type: 2}
+  waterTopLeft: {fileID: 11400000, guid: 3c77b00a3c01574488d8ff76b1035ab2, type: 2}
+  waterTopRight: {fileID: 11400000, guid: b075d4b772cc85b42a4965a301844ab0, type: 2}
+  waterBottomLeft: {fileID: 11400000, guid: e86d8098d6000e14591d0cc859dfef16, type: 2}
+  waterBottomRight: {fileID: 11400000, guid: 70dee88d31baf0540a15e5e273a604d6, type: 2}
