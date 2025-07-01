@@ -16,5 +16,4 @@ public class WorldTiles : ScriptableObject
 	public TileBase waterTopRight;
 	public TileBase waterBottomLeft;
 	public TileBase waterBottomRight;
-
 }

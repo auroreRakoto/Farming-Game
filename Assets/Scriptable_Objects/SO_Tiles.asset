@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9f31852d4ff8fc046a34a05dc5651fd0, type: 3}
-  m_Name: Tiles1
+  m_Name: SO_Tiles
   m_EditorClassIdentifier: 
   waterCenter: {fileID: 11400000, guid: a4db1a67e3f6e07428a8703ef0c28732, type: 2}
   waterTop: {fileID: 11400000, guid: 61a4e1a6079761240950bc0a407e5c3d, type: 2}
@@ -24,3 +24,5 @@ MonoBehaviour:
   waterTopRight: {fileID: 11400000, guid: b075d4b772cc85b42a4965a301844ab0, type: 2}
   waterBottomLeft: {fileID: 11400000, guid: e86d8098d6000e14591d0cc859dfef16, type: 2}
   waterBottomRight: {fileID: 11400000, guid: 70dee88d31baf0540a15e5e273a604d6, type: 2}
+  test1: {fileID: 11400000, guid: 4212b7d9a900c7e42a482c77e1a2c015, type: 2}
+  test2: {fileID: 11400000, guid: ee0b399d571397147882b320d9b11608, type: 2}

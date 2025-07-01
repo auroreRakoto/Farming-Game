@@ -4,22 +4,25 @@ using UnityEngine.Tilemaps;
 
 public class MapGenerator : MonoBehaviour
 {
-	public int seed = 12345;
-	private System.Random rng;
+	//public int seed = 1;
+	private System.Random		rng;
 	
-	public Tilemap groundTilemap;
-	public Tilemap		groundOverlayTilemap;
-	public TileBase		green;
-	public TileBase		bush;
-	public WorldData	worldData;
-	public WorldTiles	worldTiles;
+	public Tilemap				groundTilemap;
+	public Tilemap				groundOverlayTilemap;
+	public Tilemap				hardObjectsTilemap;
+	public Tilemap				hardObjectsOverlayTilemap;
+	public TileBase				green;
+	public TileBase				bush;
+	public WorldData			worldData;
+	public WorldTiles			worldTiles;
+	public BitmaskTileLibrary	waterTileLibrary;
+	private BitmaskTileSelector	tileSelector;	
 
-	public void GenerateMap()
+	public void GenerateMap(int seed)
 	{
 		rng = new System.Random(seed);
 		Debug.Log("Map Generated !");
-		groundTilemap.ClearAllTiles();
-		groundOverlayTilemap.ClearAllTiles();
+		ClearMap();
 
 		for (int x = 0; x < worldData.width; x++)
 		{
@@ -29,14 +32,16 @@ public class MapGenerator : MonoBehaviour
 			}
 		}
 
-		GeneratePond();
+		GeneratePond(seed);
 	}
 
-	private void GeneratePond()
+	private void GeneratePond(int seed)
 	{
+		tileSelector = new BitmaskTileSelector(waterTileLibrary.ToDictionary());
+
 		bool[,] waterMap = new bool[worldData.width, worldData.height];
 
-		// Première passe : placer les tiles d'eau au centre
+		// Première passe : verifier si les tiles sont de l'eau
 		for (int x = 0; x < worldData.width; x++)
 		{
 			for (int y = 0; y < worldData.height; y++)
@@ -48,9 +53,6 @@ public class MapGenerator : MonoBehaviour
 				if (noiseValue < worldData.waterMinTreshold)
 				{
 					waterMap[x, y] = true;
-
-					Vector3Int pos = new Vector3Int(x + worldData.origin.x, y + worldData.origin.y, 0);
-					groundOverlayTilemap.SetTile(pos, worldTiles.waterCenter);
 				}
 			}
 		}
@@ -59,67 +61,28 @@ public class MapGenerator : MonoBehaviour
 
 	private void PondBorders(bool[,] waterMap)
 	{ 
-		// Deuxième passe : poser les bords
+		// Deuxième passe : setup les bords avec les bitmask
 		for (int x = 0; x < worldData.width; x++)
 		{
 			for (int y = 0; y < worldData.height; y++)
 			{
-				if (!waterMap[x, y])
-					continue;
+				//if (!waterMap[x, y])
+				//	continue;
 
-				// Directions [dx, dy, tile]
-				(Vector2Int offset, TileBase tile)[] directions = new (Vector2Int, TileBase)[]
+				int mask = tileSelector.GetWaterBitmask(waterMap, x, y);
+				TileBase tile = tileSelector.GetTile(mask);
+				
+
+				if (tile != null)
 				{
-					(new Vector2Int(0, 1), worldTiles.waterTop),
-					(new Vector2Int(0, -1), worldTiles.waterBottom),
-					(new Vector2Int(-1, 0), worldTiles.waterLeft),
-					(new Vector2Int(1, 0), worldTiles.waterRight),
-					(new Vector2Int(-1, 1), worldTiles.waterTopLeft),
-					(new Vector2Int(1, 1), worldTiles.waterTopRight),
-					(new Vector2Int(-1, -1), worldTiles.waterBottomLeft),
-					(new Vector2Int(1, -1), worldTiles.waterBottomRight),
-				};
-
-				foreach (var (offset, tile) in directions)
-				{
-					int nx = x + offset.x;
-					int ny = y + offset.y;
-
-					if (nx >= 0 && ny >= 0 && nx < worldData.width && ny < worldData.height && !waterMap[nx, ny])
-					{
-						Vector3Int borderPos = new Vector3Int(nx + worldData.origin.x, ny + worldData.origin.y, 0);
-						if (groundOverlayTilemap.GetTile(borderPos) == null)
-						{
-							groundOverlayTilemap.SetTile(borderPos, tile);
-						}
-					}
+					Vector3Int pos = new Vector3Int(x + worldData.origin.x, y + worldData.origin.y, 0);
+					hardObjectsTilemap.SetTile(pos, tile);
 				}
 			}
 		}
 	}
 
-	int GetWaterBitmask(bool[,] waterMap, int x, int y)
-	{
-		int mask = 0;
-
-		if (IsWater(waterMap, x, y + 1)) mask |= 1 << 0;      // Top
-		if (IsWater(waterMap, x + 1, y + 1)) mask |= 1 << 1;  // TopRight
-		if (IsWater(waterMap, x + 1, y)) mask |= 1 << 2;      // Right
-		if (IsWater(waterMap, x + 1, y - 1)) mask |= 1 << 3;  // BottomRight
-		if (IsWater(waterMap, x, y - 1)) mask |= 1 << 4;      // Bottom
-		if (IsWater(waterMap, x - 1, y - 1)) mask |= 1 << 5;  // BottomLeft
-		if (IsWater(waterMap, x - 1, y)) mask |= 1 << 6;      // Left
-		if (IsWater(waterMap, x - 1, y + 1)) mask |= 1 << 7;  // TopLeft
-
-		return mask;
-	}
-	bool IsWater(bool[,] map, int x, int y)
-	{
-		if (x >= 0 && y >= 0 && x < map.GetLength(0) && y < map.GetLength(1)) // Borders
-			if (map[x, y]) // Case is water
-				return true;
-		return false;
-	}
+	
 
 
 	/* Template ft
@@ -137,6 +100,9 @@ public class MapGenerator : MonoBehaviour
 
 	public void ClearMap()
 	{
-
+		groundTilemap.ClearAllTiles();
+		groundOverlayTilemap.ClearAllTiles();
+		hardObjectsTilemap.ClearAllTiles();
+		hardObjectsOverlayTilemap.ClearAllTiles();
 	}
 }

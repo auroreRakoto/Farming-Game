@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b58927a3139bd441b24d6e855be6aa5, type: 3}
+  m_Name: SO_Bitmask
+  m_EditorClassIdentifier: 
+  entries:
+  - bitmask: 255
+    tile: {fileID: 11400000, guid: a4db1a67e3f6e07428a8703ef0c28732, type: 2}
+  - bitmask: 1
+    tile: {fileID: 11400000, guid: 60d8dfe1d730cbc4ea12876b26150b55, type: 2}
+  - bitmask: 4
+    tile: {fileID: 11400000, guid: fd40f791622acf44d9fe4c1e72ea6d2d, type: 2}
+  - bitmask: 16
+    tile: {fileID: 11400000, guid: 2b1081bd804db674a900b9cb3e78c406, type: 2}
+  - bitmask: 64
+    tile: {fileID: 11400000, guid: 0e12282604eec204a90350d95db32a96, type: 2}
+  - bitmask: 2
+    tile: {fileID: 11400000, guid: b075d4b772cc85b42a4965a301844ab0, type: 2}
+  - bitmask: 8
+    tile: {fileID: 11400000, guid: 95ae17eed98775749b4c2a9e30992555, type: 2}
+  - bitmask: 32
+    tile: {fileID: 11400000, guid: 3c77b00a3c01574488d8ff76b1035ab2, type: 2}
+  - bitmask: 128
+    tile: {fileID: 11400000, guid: e86d8098d6000e14591d0cc859dfef16, type: 2}
+  - bitmask: 7
+    tile: {fileID: 11400000, guid: edb09b534cdd657478b362e34425de95, type: 2}
+  - bitmask: 28
+    tile: {fileID: 11400000, guid: 4a126699cd8ac64499b10b3dbbf305d7, type: 2}
+  - bitmask: 112
+    tile: {fileID: 11400000, guid: 3307d542961be324297a51fe95826e23, type: 2}
+  - bitmask: 193
+    tile: {fileID: 11400000, guid: 6a4783818a9afd3438ebe4b409ccaae4, type: 2}
