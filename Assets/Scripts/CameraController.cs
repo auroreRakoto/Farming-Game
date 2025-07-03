@@ -5,8 +5,7 @@ public class CameraController : MonoBehaviour
 {
 	private Transform	target;
 
-	public  Transform	clampMin;
-	public  Transform	clampMax;
+	public  WorldData   worldData;
 
 
 	private Camera		cam;
@@ -18,8 +17,10 @@ public class CameraController : MonoBehaviour
 	{
 		target = FindAnyObjectByType<PlayerController>().transform;
 
-		clampMin.SetParent(null);
-		clampMax.SetParent(null);
+        //clampMin.transform.position = new Vector3(worldData.);
+
+		//clampMin.SetParent(null);
+		//clampMax.SetParent(null);
 
 		cam = GetComponent<Camera>();
 		halfHeight = cam.orthographicSize;
@@ -28,14 +29,19 @@ public class CameraController : MonoBehaviour
 
 	// Update is called once per frame
 	void Update()
-	{
-		transform.position = new Vector3(target.position.x, target.position.y, transform.position.z);
+    {
+        // Follow the target
+        Vector3 newPosition = target.position;
 
-		Vector3 clampedPosition = transform.position;
+        // Clamp the camera to stay within bounds
+        newPosition.x = Mathf.Clamp(newPosition.x, worldData.origin.x + halfWidth, worldData.origin.x + worldData.width - halfWidth);
+        newPosition.y = Mathf.Clamp(newPosition.y, worldData.origin.y + halfHeight, worldData.origin.y + worldData.height - halfHeight);
 
-		clampedPosition.x = Mathf.Clamp(clampedPosition.x, clampMin.position.x + halfWidth, clampMax.position.x - halfWidth);
-		clampedPosition.y = Mathf.Clamp(clampedPosition.y, clampMin.position.y + halfHeight, clampMax.position.y - halfHeight);
+        // Keep original Z (camera depth)
+        newPosition.z = transform.position.z;
 
-		transform.position = clampedPosition;
-	}
+        // Apply the position
+        transform.position = newPosition;
+    }
+
 }

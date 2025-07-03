@@ -13,10 +13,17 @@ public class MapGenerator : MonoBehaviour
 	public Tilemap				hardObjectsOverlayTilemap;
 	public TileBase				green;
 	public TileBase				bush;
+    public TileBase				bush2;
+    public TileBase				bush3;
 	public WorldData			worldData;
 	public WorldTiles			worldTiles;
 	public BitmaskTileLibrary	waterTileLibrary;
-	private BitmaskTileSelector	tileSelector;	
+	private BitmaskTileSelector	tileSelector;
+
+    public void Start()
+    {
+        GenerateMapBorders();
+    }
 
 	public void GenerateMap(int seed)
 	{
@@ -32,14 +39,16 @@ public class MapGenerator : MonoBehaviour
 			}
 		}
 
+        tileSelector = new BitmaskTileSelector(waterTileLibrary.ToDictionary());
+
 		GeneratePond(seed);
+        //GenerateMapBorders();
 	}
 
 	private void GeneratePond(int seed)
 	{
-		tileSelector = new BitmaskTileSelector(waterTileLibrary.ToDictionary());
-
 		bool[,] waterMap = new bool[worldData.width, worldData.height];
+        bool[,] grass1Map = new bool[worldData.width, worldData.height];
 
 		// Première passe : verifier si les tiles sont de l'eau
 		for (int x = 0; x < worldData.width; x++)
@@ -53,7 +62,28 @@ public class MapGenerator : MonoBehaviour
 				if (noiseValue < worldData.waterMinTreshold)
 				{
 					waterMap[x, y] = true;
-				}
+				} else //if (noiseValue < 0.6 && noiseValue > 0.5)
+                {
+                    //grass1Map[x, y] = true;
+                    float r = UnityEngine.Random.value;
+                    if (r < 0.1)
+                    {
+                        Vector3Int pos = new Vector3Int(x + worldData.origin.x, y + worldData.origin.y, 0);
+                        groundOverlayTilemap.SetTile(pos, bush);
+                    }
+                    r = UnityEngine.Random.value;
+                    if (r < 0.06)
+                    {
+                        Vector3Int pos = new Vector3Int(x + worldData.origin.x, y + worldData.origin.y, 0);
+                        groundOverlayTilemap.SetTile(pos, bush2);
+                    }
+                    r = UnityEngine.Random.value;
+                    if (r < 0.03)
+                    {
+                        Vector3Int pos = new Vector3Int(x + worldData.origin.x, y + worldData.origin.y, 0);
+                        groundOverlayTilemap.SetTile(pos, bush3);
+                    }
+                }
 			}
 		}
 		PondBorders(waterMap);
@@ -82,21 +112,50 @@ public class MapGenerator : MonoBehaviour
 		}
 	}
 
-	
+    private void GenerateMapBorders()
+    {
+        float left = worldData.origin.x;
+        float right = worldData.origin.x + worldData.width;
+        float bottom = worldData.origin.y;
+        float top = worldData.origin.y + worldData.height;
 
 
-	/* Template ft
-	public void GenerateGround()
-	{
-		for (int x = 0; x < worldData.width; x++)
-		{
-			for (int y = 0; y < worldData.height; y++)
-			{ 
-				
-			}
-		}
-	}
-	*/
+        GameObject parent = new GameObject("Map Walls");
+
+        GameObject leftWall = new GameObject("InvisibleLeftWall");
+        leftWall.transform.position = new Vector2(left, ((top - bottom) / 2) + bottom);
+        leftWall.transform.localScale = new Vector2(1, top - bottom);
+        BorderWall(leftWall, parent);
+
+        GameObject rightWall = new GameObject("InvisibleRightWall");
+        rightWall.transform.position = new Vector2(right, ((top - bottom) / 2) + bottom);
+        rightWall.transform.localScale = new Vector2(1, top - bottom);
+        BorderWall(rightWall, parent);
+
+        GameObject topWall = new GameObject("InvisibleTopWall");
+        topWall.transform.position = new Vector2(((right - left) / 2) + left, top);
+        topWall.transform.localScale = new Vector2(right - left, 1);
+        BorderWall(topWall, parent);
+
+        GameObject bottomWall = new GameObject("InvisibleBottomWall");
+        bottomWall.transform.position = new Vector2(((right - left) / 2) + left, bottom);
+        bottomWall.transform.localScale = new Vector2(right - left, 1);
+        BorderWall(bottomWall, parent);
+    }
+
+    private void BorderWall(GameObject wall, GameObject parent)
+    {
+        SpriteRenderer wallSr = wall.AddComponent<SpriteRenderer>();
+        wallSr.color = new Color(0, 120f, 0, 0.5f);
+        Rigidbody2D wallRb = wall.AddComponent<Rigidbody2D>();
+        wallRb.bodyType = RigidbodyType2D.Static;
+        BoxCollider2D wallCol = wall.AddComponent<BoxCollider2D>();
+        wallCol.size = wall.transform.localScale;
+        wall.transform.parent = parent.transform;
+    }
+
+
+
 
 	public void ClearMap()
 	{
