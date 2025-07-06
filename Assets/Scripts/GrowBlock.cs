@@ -15,18 +15,21 @@ public class GrowBlock : MonoBehaviour
 		ripe
 	}
 
-	public GrowthStage currentStage;
-	public SpriteRenderer theSP;
-	public Sprite soilTilled;
-	public Sprite soilWatered;
+	public GrowthStage		currentStage;
+	public SpriteRenderer	theSP;
+	public Sprite			soilTilled;
+	public Sprite			soilWatered;
 
-	public SpriteRenderer cropSP;
-	public Sprite plantedSprite;
-	public Sprite growing1Sprite;
-	public Sprite growing2Sprite;
-	public Sprite ripeSprite;
+	public SpriteRenderer	cropSP;
+	public Sprite			plantedSprite;
+	public Sprite			growing1Sprite;
+	public Sprite			growing2Sprite;
+	public Sprite			ripeSprite;
 
-	public bool isWatered;
+	public bool				isWatered;
+
+	public float			GridX { get; private set; }
+	public float			GridY { get; private set; }
 
 
 	// Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -61,6 +64,12 @@ public class GrowBlock : MonoBehaviour
 		}
 #endif
 
+	}
+
+	public void SetCoordinates(float x, float y)
+	{
+		GridX = x;
+		GridY = y;
 	}
 
 	public void AdvanceStage()

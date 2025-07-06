@@ -4,12 +4,14 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-	public Rigidbody2D theRB;
-	public float moveSpeed;
+	public Rigidbody2D			theRB;
+	public float				moveSpeed;
 
-	public InputActionReference moveInput;
-	public InputActionReference actionInput;
-	public Animator anim;
+	
+
+	public InputActionReference	moveInput;
+	public InputActionReference	actionInput;
+	public Animator				anim;
 
 	public enum ToolType
 	{
@@ -19,16 +21,21 @@ public class PlayerController : MonoBehaviour
 		basket
 	}
 
-	public ToolType currentTool;
+	public ToolType				currentTool;
 
-	public float toolWaitTime = .5f;
-	public float toolWaitCounter;
+	public float				toolWaitTime;
+	public float				toolWaitCounter;
 
-	bool itemSwitched;
+	public Transform			toolIndicator;
+
+	bool						itemSwitched;
+	public float				toolRange;
 
 	// Start is called once before the first execution of Update after the MonoBehaviour is created
 	void Start()
 	{
+		toolRange = 1f;
+		toolWaitTime = .5f;
 		UIController.instance.SwitchItem((int)currentTool);
 	}
 
@@ -93,13 +100,28 @@ public class PlayerController : MonoBehaviour
 		{
 			anim.SetFloat("speed", theRB.linearVelocity.magnitude);
 		}
+
+		toolIndicator.position = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+		toolIndicator.position = new Vector3(toolIndicator.position.x, toolIndicator.position.y, 0);
+
+		if (Vector3.Distance(toolIndicator.position, transform.position) > toolRange)
+		{
+			Vector2 direction = toolIndicator.position - transform.position;
+			direction = direction.normalized * toolRange;
+
+			toolIndicator.position = transform.position + new Vector3(direction.x, direction.y, 0f);
+		}
+		float x = Mathf.FloorToInt(toolIndicator.position.x) +.5f;
+		float y = Mathf.FloorToInt(toolIndicator.position.y) +.5f;
+		toolIndicator.position = new Vector3(x, y, 0f);
 	}
 
 	void UseTool()
 	{
 		// bunch of tools
 		GrowBlock block = null;
-		block = FindFirstObjectByType<GrowBlock>();
+		//block = FindFirstObjectByType<GrowBlock>();
+		block = GridController.instance.GetBlockAt(toolIndicator.position.x -.5f, toolIndicator.position.y -.5f);
 
 		toolWaitCounter = toolWaitTime;
 

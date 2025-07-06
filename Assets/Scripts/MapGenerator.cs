@@ -114,36 +114,33 @@ public class MapGenerator : MonoBehaviour
 
     private void GenerateMapBorders()
     {
-        float left = worldData.origin.x;
-        float right = worldData.origin.x + worldData.width;
-        float bottom = worldData.origin.y;
-        float top = worldData.origin.y + worldData.height;
-
-
-        GameObject parent = new GameObject("Map Walls");
+        float left = worldData.origin.x - 0.5f;
+        float right = worldData.origin.x + worldData.width + 0.5f;
+        float bottom = worldData.origin.y - 0.5f;
+        float top = worldData.origin.y + worldData.height + 0.5f;
 
         GameObject leftWall = new GameObject("InvisibleLeftWall");
         leftWall.transform.position = new Vector2(left, ((top - bottom) / 2) + bottom);
         leftWall.transform.localScale = new Vector2(1, top - bottom);
-        BorderWall(leftWall, parent);
+        BorderWall(leftWall);
 
         GameObject rightWall = new GameObject("InvisibleRightWall");
         rightWall.transform.position = new Vector2(right, ((top - bottom) / 2) + bottom);
         rightWall.transform.localScale = new Vector2(1, top - bottom);
-        BorderWall(rightWall, parent);
+        BorderWall(rightWall);
 
         GameObject topWall = new GameObject("InvisibleTopWall");
         topWall.transform.position = new Vector2(((right - left) / 2) + left, top);
         topWall.transform.localScale = new Vector2(right - left, 1);
-        BorderWall(topWall, parent);
+        BorderWall(topWall);
 
         GameObject bottomWall = new GameObject("InvisibleBottomWall");
         bottomWall.transform.position = new Vector2(((right - left) / 2) + left, bottom);
         bottomWall.transform.localScale = new Vector2(right - left, 1);
-        BorderWall(bottomWall, parent);
+        BorderWall(bottomWall);
     }
 
-    private void BorderWall(GameObject wall, GameObject parent)
+    private void BorderWall(GameObject wall)
     {
         SpriteRenderer wallSr = wall.AddComponent<SpriteRenderer>();
         wallSr.color = new Color(0, 120f, 0, 0.5f);
@@ -151,7 +148,7 @@ public class MapGenerator : MonoBehaviour
         wallRb.bodyType = RigidbodyType2D.Static;
         BoxCollider2D wallCol = wall.AddComponent<BoxCollider2D>();
         wallCol.size = wall.transform.localScale;
-        wall.transform.parent = parent.transform;
+        wall.transform.SetParent(transform);
     }
 
 
