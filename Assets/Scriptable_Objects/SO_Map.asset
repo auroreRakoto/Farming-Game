@@ -20,3 +20,5 @@ MonoBehaviour:
   groundMaxTreshold: 0.8
   waterMinTreshold: 0.25
   waterMaxTreshold: 0
+  houseScene: Indoors
+  outsideScene: GeneratorTest

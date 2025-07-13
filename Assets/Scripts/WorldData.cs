@@ -11,4 +11,6 @@ public class WorldData : ScriptableObject
 	public float		groundMaxTreshold;
 	public float		waterMinTreshold;
 	public float		waterMaxTreshold;
+	public string		houseScene;
+	public string		outsideScene;
 }
